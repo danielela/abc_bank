@@ -18,8 +18,28 @@ public class Customer {
         return name;
     }
 
+    
+    /**
+     * 
+     * @param account
+     * @return
+     * 
+     * A customer can Open an account. If a customer tries to open an account type which he already has
+     * Then it will not be allowed
+     * 
+     */
     public Customer openAccount(Account account) {
-        accounts.add(account);
+    	
+    	System.out.println("The number of accounts="+this.getNumberOfAccounts()+" This name="+this.getName());
+    	/* Check if this Customer already has the same account type
+    	 * The overriden equals method in the Account class will check this based on the accountType
+    	 */
+    	if(!this.accounts.contains(account)){
+    		this.accounts.add(account);
+    	}else{
+    		//Action to be taken when the account is duplicate
+    		System.out.println("the user already has this account"+account.getAccountType());
+    	}
         return this;
     }
 
@@ -31,7 +51,19 @@ public class Customer {
         double total = 0;
         for (Account a : accounts)
             total += a.interestEarned();
+        
+        System.out.println("The total balance of "+this.getName());
         return total;
+    }
+    
+    public void transferFundWithinAcc(int fromAccType, int toAccType, double amount){
+    	if(getNumberOfAccounts()>=2){
+    		Account fromAcc=accounts.get(fromAccType);
+    		fromAcc.withdraw(amount);
+    		
+    		Account toAcc=accounts.get(toAccType);
+    		toAcc.deposit(amount);
+    	}
     }
 
     public String getStatement() {
@@ -40,7 +72,7 @@ public class Customer {
         double total = 0.0;
         for (Account a : accounts) {
             statement += "\n" + statementForAccount(a) + "\n";
-            total += a.sumTransactions();
+            total += a.sumTransactions(true);
         }
         statement += "\nTotal In All Accounts " + toDollars(total);
         return statement;

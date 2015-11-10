@@ -2,18 +2,24 @@ package com.abc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Bank {
     private List<Customer> customers;
 
+   // private Set<Customer> customers;
+    
     public Bank() {
         customers = new ArrayList<Customer>();
+    	//customers = new TreeSet<Customer>();
     }
 
     public void addCustomer(Customer customer) {
         customers.add(customer);
     }
 
+    
     public String customerSummary() {
         String summary = "Customer Summary";
         for (Customer c : customers)
